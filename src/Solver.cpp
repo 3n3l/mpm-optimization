@@ -53,13 +53,6 @@ bool Solver::initialize() {
         m_grid.push_back(new GridNode(i));
     }
 
-    // std::cout << "Gridsize: " << MPM::gridsize[0] << ' ' << MPM::gridsize[1]
-    //           << ' ' << MPM::gridsize[2] << std::endl;
-    // std::cout << "Cellsize: " << MPM::cellsize[0] << ' ' << MPM::cellsize[1]
-    //           << ' ' << MPM::cellsize[2] << std::endl;
-    // std::cout << "Num Particles: " << m_particles.size() << std::endl;
-    // std::cout << "Num Nodes: " << m_grid.size() << std::endl;
-
     return true;
 }
 
@@ -222,10 +215,7 @@ void Solver::implicit_solve() {
 
     // Initial guess of grid velocities
     VectorXd v(active_grid.size() * 3);
-    // std::cout << "active_grid size = " << active_grid.size() << std::endl;
-    // std::cout << "size = " << v.size() << std::endl;
-    // std::cout << "rows = " << v.rows() << std::endl;
-    // std::cout << "cols = " << v.cols() << std::endl;
+
 #pragma omp parallel for
     for (int i = 0; i < active_grid.size(); ++i) {
         for (int j = 0; j < 3; ++j) {

@@ -158,18 +158,15 @@ void LBFGS<MatrixType>::reset(int rows, int cols) {
 // Returns number of iterations used
 template <typename MatrixType>
 typename LBFGS<MatrixType>::Scalar LBFGS<MatrixType>::minimize(MatrixType& x) {
-    // std::cout << "MINIMIZE()" << std::endl;
     initialize(x);
 
     // Did we start at the initializer?
     if (num_iters >= options.min_iters && converged(obj_k, x_last, x, grad)) {
-        // std::cout << "STARTED AT INITIALIZER" << std::endl;
         num_iters = 1;
         return obj_k;
     }
 
     for (; k < max_iters; ++k) {
-        std::cout << k << std::endl;
         iterate(x);
     }  // end loop lbfgs iters
 
@@ -179,7 +176,6 @@ typename LBFGS<MatrixType>::Scalar LBFGS<MatrixType>::minimize(MatrixType& x) {
 
 template <typename MatrixType>
 void LBFGS<MatrixType>::initialize(MatrixType& x) {
-    // std::cout << "INITIALIZE()" << std::endl;
     initialized = true;
 
     if (gradient == nullptr) {
@@ -211,8 +207,6 @@ void LBFGS<MatrixType>::initialize(MatrixType& x) {
 
 template <typename MatrixType>
 typename LBFGS<MatrixType>::Scalar LBFGS<MatrixType>::iterate(MatrixType& velocity) {
-    // std::cout << "ITERATE()" << std::endl;
-
     if (!initialized) {
         throw std::runtime_error("not initialized");
     }
@@ -247,9 +241,7 @@ typename LBFGS<MatrixType>::Scalar LBFGS<MatrixType>::iterate(MatrixType& veloci
         }
 
         // L-BFGS second - loop recursion
-        // std::cout << "iter = " << iter << std::endl;
         for (int i = 0; i < iter; ++i) {
-            // std::cout << "i = " << i << std::endl;
             Scalar beta = rho(i) * inner(q, y[i]);
             q += (alpha(i) - beta) * s[i];
         }
@@ -296,7 +288,6 @@ typename LBFGS<MatrixType>::Scalar LBFGS<MatrixType>::iterate(MatrixType& veloci
             y[k] = y_temp;
         } else {
             for (int i = 0; i < options.M - 1; ++i) {
-                // std::cout << i << std::endl;
                 s[i] = s[i + 1];
                 y[i] = y[i + 1];
             }
